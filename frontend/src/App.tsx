@@ -17,6 +17,9 @@ import QRFullscreen from "./pages/attendance/QRFullscreen";
 import StudentCheckIn from "./pages/attendance/StudentCheckIn";
 import AttendanceReport from "./pages/attendance/AttendanceReport";
 import ExcusedReview from "./pages/attendance/ExcusedReview";
+import FeedbackList from "./pages/feedback/FeedbackList";
+import FeedbackForm from "./pages/feedback/FeedbackForm";
+import FeedbackDetail from "./pages/feedback/FeedbackDetail";
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -44,6 +47,9 @@ function AppNav() {
         </Link>
         <Link to="/attendance" className="text-gray-600 hover:text-gray-900">
           Attendance
+        </Link>
+        <Link to="/feedback" className="text-gray-600 hover:text-gray-900">
+          Feedback
         </Link>
         {user && (
           <>
@@ -102,6 +108,11 @@ function AppRoutes() {
           <Route path="/attendance/check-in" element={<StudentCheckIn />} />
           <Route path="/attendance/report/:batchId" element={<AttendanceReport />} />
           <Route path="/attendance/excused" element={<ExcusedReview />} />
+          <Route path="/feedback" element={<FeedbackList />} />
+          <Route path="/feedback/create/:sessionId" element={<FeedbackForm />} />
+          <Route path="/feedback/create" element={<FeedbackForm />} />
+          <Route path="/feedback/:id/edit" element={<FeedbackForm />} />
+          <Route path="/feedback/:id" element={<FeedbackDetail />} />
         </Routes>
       </main>
     </div>

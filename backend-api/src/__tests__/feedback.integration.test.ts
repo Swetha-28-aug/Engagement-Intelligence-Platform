@@ -4,6 +4,7 @@ import request from "supertest";
 const fns = {
   fbFindMany: jest.fn(),
   fbFindUnique: jest.fn(),
+  fbFindFirst: jest.fn(),
   fbCreate: jest.fn(),
   fbUpdate: jest.fn(),
   fbDelete: jest.fn(),
@@ -17,6 +18,7 @@ jest.mock("../lib/prisma", () => ({
     feedback: {
       findMany: (...a: any[]) => fns.fbFindMany(...a),
       findUnique: (...a: any[]) => fns.fbFindUnique(...a),
+      findFirst: (...a: any[]) => fns.fbFindFirst(...a),
       create: (...a: any[]) => fns.fbCreate(...a),
       update: (...a: any[]) => fns.fbUpdate(...a),
       delete: (...a: any[]) => fns.fbDelete(...a),
@@ -34,6 +36,7 @@ const mockPrisma = {
   feedback: {
     findMany: fns.fbFindMany,
     findUnique: fns.fbFindUnique,
+    findFirst: fns.fbFindFirst,
     create: fns.fbCreate,
     update: fns.fbUpdate,
     delete: fns.fbDelete,
@@ -48,6 +51,10 @@ import { errorHandler } from "../middleware/error.middleware";
 function createApp() {
   const app = express();
   app.use(express.json());
+  app.use((req, _res, next) => {
+    (req as any).user = { sub: "c0000000-0000-0000-0000-000000000001", roleId: "role-1" };
+    next();
+  });
   app.use("/api/feedback", feedbackRoutes);
   app.use(errorHandler);
   return app;
@@ -59,6 +66,7 @@ beforeEach(() => {
   Object.values(mockPrisma.feedback).forEach((fn) => fn.mockReset());
   mockPrisma.session.findUnique.mockReset();
   mockPrisma.user.findUnique.mockReset();
+  mockPrisma.feedback.findFirst.mockResolvedValue(null);
 });
 
 const RECORD = {
