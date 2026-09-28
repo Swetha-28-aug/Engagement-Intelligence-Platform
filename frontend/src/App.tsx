@@ -1,12 +1,19 @@
-import { Routes, Route, Link } from "react-router-dom";
-import AssessmentList from "./pages/assessments/AssessmentList";
-import AssessmentCreate from "./pages/assessments/AssessmentCreate";
-import AssessmentDetail from "./pages/assessments/AssessmentDetail";
-import ScoreEntry from "./pages/assessments/ScoreEntry";
-import BulkUpload from "./pages/assessments/BulkUpload";
-import BatchList from "./pages/batches/BatchList";
-import BatchCreate from "./pages/batches/BatchCreate";
-import BatchDetail from "./pages/batches/BatchDetail";
+import { Routes, Route, Link } from 'react-router-dom';
+import AssessmentList from './pages/assessments/AssessmentList';
+import AssessmentCreate from './pages/assessments/AssessmentCreate';
+import AssessmentDetail from './pages/assessments/AssessmentDetail';
+import ScoreEntry from './pages/assessments/ScoreEntry';
+import BulkUpload from './pages/assessments/BulkUpload';
+import BatchList from './pages/batches/BatchList';
+import BatchCreate from './pages/batches/BatchCreate';
+import BatchDetail from './pages/batches/BatchDetail';
+import MarkAttendance from './pages/attendance/MarkAttendance';
+import SessionAttendance from './pages/attendance/SessionAttendance';
+import StudentAttendance from './pages/attendance/StudentAttendance';
+import QRFullscreen from './pages/attendance/QRFullscreen';
+import StudentCheckIn from './pages/attendance/StudentCheckIn';
+import AttendanceReport from './pages/attendance/AttendanceReport';
+import ExcusedReview from './pages/attendance/ExcusedReview';
 
 function App() {
   return (
@@ -21,6 +28,9 @@ function App() {
           </Link>
           <Link to="/batches" className="text-gray-600 hover:text-gray-900">
             Batches
+          </Link>
+          <Link to="/attendance" className="text-gray-600 hover:text-gray-900">
+            Attendance
           </Link>
         </div>
       </nav>
@@ -37,6 +47,13 @@ function App() {
           <Route path="/batches/create" element={<BatchCreate />} />
           <Route path="/batches/:id/edit" element={<BatchCreate />} />
           <Route path="/batches/:id" element={<BatchDetail />} />
+          <Route path="/attendance/mark/:sessionId" element={<MarkAttendance />} />
+          <Route path="/attendance/session/:sessionId" element={<SessionAttendance />} />
+          <Route path="/attendance/student/:studentId" element={<StudentAttendance />} />
+          <Route path="/attendance/qr/:windowId" element={<QRFullscreen />} />
+          <Route path="/attendance/check-in" element={<StudentCheckIn />} />
+          <Route path="/attendance/report/:batchId" element={<AttendanceReport />} />
+          <Route path="/attendance/excused" element={<ExcusedReview />} />
         </Routes>
       </main>
     </div>

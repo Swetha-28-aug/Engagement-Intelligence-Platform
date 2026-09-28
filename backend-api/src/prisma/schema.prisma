@@ -227,14 +227,33 @@ model Session {
 
   trainer User @relation(fields: [trainerId], references: [id])
 
+  attendanceWindows AttendanceWindow[]
+  attendances       Attendance[]
+  feedbacks         Feedback[]
+}
+
+model AttendanceWindow {
+  id String @id @default(uuid())
+  @@map("attendance_windows")
+
+  sessionId String
+
+  label String
+
+  startTime DateTime
+  endTime   DateTime
+
+  createdAt DateTime @default(now())
+
+  session     Session      @relation(fields: [sessionId], references: [id])
   attendances Attendance[]
-  feedbacks   Feedback[]
 }
 
 model Attendance {
   id String @id @default(uuid())
   @@map("attendance")
 
+  windowId  String
   sessionId String
   studentId String
 
@@ -246,11 +265,11 @@ model Attendance {
 
   createdAt DateTime @default(now())
 
-  session Session @relation(fields: [sessionId], references: [id])
+  window  AttendanceWindow @relation(fields: [windowId], references: [id])
+  session Session          @relation(fields: [sessionId], references: [id])
+  student User             @relation(fields: [studentId], references: [id])
 
-  student User @relation(fields: [studentId], references: [id])
-
-  @@unique([sessionId, studentId])
+  @@unique([windowId, studentId])
 }
 
 model Assessment {

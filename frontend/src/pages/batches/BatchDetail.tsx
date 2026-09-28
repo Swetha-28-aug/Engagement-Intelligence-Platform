@@ -447,7 +447,19 @@ export default function BatchDetail() {
                       })}
                     </td>
                     <td className="px-4 py-2 text-sm">{s.trainer.name}</td>
-                    <td className="px-4 py-2 text-sm">
+                    <td className="px-4 py-2 text-sm flex gap-2">
+                      <Link
+                        to={`/attendance/mark/${s.id}`}
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        Mark Attendance
+                      </Link>
+                      <Link
+                        to={`/attendance/session/${s.id}`}
+                        className="text-gray-600 hover:text-gray-800"
+                      >
+                        View
+                      </Link>
                       <button
                         onClick={() => handleDeleteSession(s.id)}
                         className="text-red-600 hover:text-red-800"
