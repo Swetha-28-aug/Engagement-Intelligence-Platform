@@ -2,7 +2,7 @@ import { Worker, Job } from 'bullmq';
 import Redis from 'ioredis';
 import { config } from '../config';
 import { logger } from '../utils/logger';
-import prisma from '../utils/prisma';
+import prisma from '../lib/prisma';
 import { sendWeeklyReport } from '../services/email.service';
 import type { WeeklyReportJob } from './queue';
 
